@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api.Models
 {

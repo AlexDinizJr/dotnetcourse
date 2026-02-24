@@ -1,0 +1,69 @@
+# Visual Studio and .NET
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# Microsoft Azure Web App publish settings
+PublishProfiles/
+
+# NuGet packages
+*.nupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+
+# Resharper
+_ReSharper*/
+*.[Rr]e[Ss]harper
+
+# DotCover
+*.dotCover
+
+# JustCode
+.JustCode/
+
+# *.log
+*.log
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# JetBrains Rider
+.idea/
+
+# IIS Express
+/.vs/
+
+# User-specific files
+*.user
+*.suo
+
+# Secret manager
+secrets.json
+
+# Entity Framework
+*.db
+
+# Temporary files
+*.tmp
+*.temp
+
+# Other
+*.DS_Store
+
