@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using AutoMapper;
-using api.Data;
-using api.Models;
 using api.DTOs.Stock;
 using api.Repositories;
 using api.Interfaces;
+using api.Models;
 
 namespace api.Controllers
 {
@@ -17,13 +15,11 @@ namespace api.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IStockRepository _stockRepo;
 
-        public StockController(ApplicationDbContext context, IMapper mapper, IStockRepository stockRepo)
+        public StockController(IMapper mapper, IStockRepository stockRepo)
         {
-            _context = context;
             _mapper = mapper;
             _stockRepo = stockRepo;
         }
