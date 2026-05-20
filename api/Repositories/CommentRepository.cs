@@ -7,6 +7,7 @@ using api.Interfaces;
 using api.Data;
 using api.DTOs.Comment;
 using api.Models;
+using api.Helpers;
 
 namespace api.Repositories
 {
@@ -19,9 +20,21 @@ namespace api.Repositories
             _context = context;
         }
 
-        public async Task<List<Comment>> GetAllAsync()
+        public async Task<List<Comment>> GetAllAsync(CommentQueryObject queryObject)
         {
-            return await _context.Comments.ToListAsync();
+            var comments = _context.Comments.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(queryObject.Symbol))
+            {
+                comments = comments.Where(s => s.Stock!.Symbol == queryObject.Symbol);
+            };
+
+            if (queryObject.IsDescending == true)
+            {
+                comments = comments.OrderByDescending(c => c.CreatedAt);
+            }
+
+            return await comments.ToListAsync();
         }
 
         public async Task<Comment?> GetByIdAsync(int id)

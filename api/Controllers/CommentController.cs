@@ -8,6 +8,7 @@ using api.DTOs.Comment;
 using api.Repositories;
 using api.Interfaces;
 using api.Models;
+using api.Helpers;
 
 namespace api.Controllers
 {
@@ -27,16 +28,24 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CommentQueryObject commentQuery)
         {
-            var comments = await _commentRepo.GetAllAsync();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+                
+            var comments = await _commentRepo.GetAllAsync(commentQuery);
+
             var commentDTOs = _mapper.Map<List<CommentDTO>>(comments);
+
             return Ok(commentDTOs);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var comment = await _commentRepo.GetByIdAsync(id);
             if (comment == null)
             {
@@ -46,9 +55,12 @@ namespace api.Controllers
             return Ok(commentDTO);
         }
 
-        [HttpPost("{stockId}")]
+        [HttpPost("{stockId:int}")]
         public async Task<IActionResult> Create([FromBody] CreateCommentRequestDTO commentRequestDTO, [FromRoute] int stockId)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             if (!await _stockRepo.StockExists(stockId))
             {
                return BadRequest("Stock does not exist");
@@ -60,9 +72,12 @@ namespace api.Controllers
             return CreatedAtAction(nameof(GetById), new { id = commentModel.Id }, _mapper.Map<CommentDTO>(commentModel));
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdateCommentRequestDTO commentRequestDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var existingComment = await _commentRepo.GetByIdAsync(id);
 
             if (existingComment == null)
@@ -75,9 +90,12 @@ namespace api.Controllers
             return Ok(_mapper.Map<CommentDTO>(existingComment));
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             var comment = await _commentRepo.GetByIdAsync(id);
 
             if (comment == null)
